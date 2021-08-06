@@ -38,7 +38,7 @@ describe('demo routes', () => {
     const res = await request(app)
       .get('/api/v1/studios');
 
-    expect(res.body).toEqual([{ id: 1, ...bs }, { id: 2, ...dream }, { id: 3, ...sony }]);
+    expect(res.body).toEqual([{ id: 1, name: bs.name }, { id: 2, name: dream.name }, { id: 3, name: sony.name }]);
   });
 
   it('updates studio via PATCH', async () => {
