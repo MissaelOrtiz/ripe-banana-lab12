@@ -55,7 +55,7 @@ describe('film routes', () => {
 
     const res = await request(app)
       .patch(`/api/v1/films/${film.id}`)
-      .send({ name: 'Banana Express 10' });
+      .send({ title: 'Banana Express 10' });
 
     expect(res.body).toEqual({ id: 1, title: 'Banana Express 10', studio: `${studio.id}`, released: '2021' });
   });
