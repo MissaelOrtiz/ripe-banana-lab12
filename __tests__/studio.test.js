@@ -8,7 +8,7 @@ describe('demo routes', () => {
   beforeEach(() => {
     return database.sync({ force: true });
   });
-  
+
   it('creates a studio via POST', async () => {
     const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
     const res = await request(app)
@@ -16,6 +16,6 @@ describe('demo routes', () => {
       .send(bs);
 
     expect(res.body).toEqual({ id: 1, ...bs });
-  })
+  });
 
 });
