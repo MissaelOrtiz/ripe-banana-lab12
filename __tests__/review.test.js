@@ -38,4 +38,20 @@ describe('reviews routes', () => {
     expect(res.body).toEqual({ id: 1, ...review.toJSON() });
   });
 
+  it('gets all reviews via GET', async () => {
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const reviewer = await Reviewer.create({ name: 'Dick Johnson', company: 'Banana Reviews' });
+    const be = await Film.create({ title: 'Banana Express', studio: `${studio.id}`, released: '2021' });
+
+    const review1 = { rating: 5, reviewer: `${reviewer.id}`, review: 'It good', film: `${be.id}` };
+    const review2 = { rating: 1, reviewer: `${reviewer.id}`, review: 'Nevermind I actually watched the movie', film: `${be.id}` };
+
+    await Review.bulkCreate([review1, review2]);
+
+    const res = await request(app)
+      .get('/api/v1/reviews');
+
+    expect(res.body).toEqual([{ id: 1, ...review1 }, { id: 2, ...review2 }]);
+  });
+
 });
