@@ -41,4 +41,24 @@ describe('demo routes', () => {
     expect(res.body).toEqual([{ id: 1, ...bs }, { id: 2, ...dream }, { id: 3, ...sony }]);
   });
 
+  it('updates studio via PATCH', async () => {
+    const bs = { name: 'Barbara Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    const studio = await Studio.create(bs);
+
+    const res = await request(app)
+      .patch(`/api/v1/studios/${studio.id}`)
+      .send({ name: 'Banana Studios' });
+
+    expect(res.body).toEqual({ id: 1, name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+  });
+
+  it('deletes a studio via DELETE', async () => {
+    const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    const studio = await Studio.create(bs);
+
+    const res = await request(app)
+      .delete(`/api/v1/studios/${studio.id}`);
+
+    expect(res.body).toEqual({ success: true });
+  });
 });
