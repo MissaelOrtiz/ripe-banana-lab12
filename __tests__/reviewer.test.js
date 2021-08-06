@@ -18,4 +18,13 @@ describe('reviewers routes', () => {
     expect(res.body).toEqual({ id: 1, ...dj });
   });
 
+  it('gets a reviewer via GET:id', async () => {
+    const dj = { name: 'Dick Johnson', company: 'Banana Reviews' };
+    const reviewer = await Reviewer.create(dj);
+
+    const res = await request(app)
+      .get(`/api/v1/reviewers/${reviewer.id}`);
+
+    expect(res.body).toEqual({ id: 1, ...dj });
+  });
 });
