@@ -13,7 +13,7 @@ describe('film routes', () => {
   it('creates a film via POST', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
 
-    const be = { title: 'Banana Express', studio: studio.id, released: 2021 };
+    const be = { title: 'Banana Express', studio: `${studio.id}`, released: '2021' };
 
     const res = await request(app)
       .post('/api/v1/films/')
