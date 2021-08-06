@@ -27,4 +27,17 @@ describe('reviewers routes', () => {
 
     expect(res.body).toEqual({ id: 1, ...dj });
   });
+
+  it('gets all reviewers via GET', async () => {
+    const dj = { name: 'Dick Johnson', company: 'Banana Reviews' };
+    const dj2 = { name: 'Derek Johnson', company: 'The Onion' };
+    const dj3 = { name: 'Daquan Johnson', company: 'Huff Post' };
+
+    await Reviewer.bulkCreate([dj, dj2, dj3]);
+
+    const res = await request(app)
+      .get('/api/v1/reviewers');
+
+    expect(res.body).toEqual([{ id: 1, ...dj }, { id: 2, ...dj2 }, { id: 3, ...dj3 }]);
+  });
 });
