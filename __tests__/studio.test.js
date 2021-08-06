@@ -8,7 +8,7 @@ describe('demo routes', () => {
   beforeEach(() => {
     return database.sync({ force: true });
   });
-  
+
   it('creates a studio via POST', async () => {
     const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
     const res = await request(app)
@@ -16,6 +16,29 @@ describe('demo routes', () => {
       .send(bs);
 
     expect(res.body).toEqual({ id: 1, ...bs });
-  })
+  });
+
+  it('gets a studio via GET:id', async () => {
+    const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    const studio = await Studio.create(bs);
+
+    const res = await request(app)
+      .get(`/api/v1/studios/${studio.id}`);
+
+    expect(res.body).toEqual({ id: 1, ...bs });
+  });
+
+  it('gets all studios via GET', async () => {
+    const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    const dream = { name: 'Dreamworks', city: 'Portland', state: 'Oregon', country: 'US' };
+    const sony = { name: 'Sony', city: 'Portland', state: 'Oregon', country: 'US' };
+
+    await Studio.bulkCreate([bs, dream, sony]);
+
+    const res = await request(app)
+      .get('/api/v1/studios');
+
+    expect(res.body).toEqual([{ id: 1, ...bs }, { id: 2, ...dream }, { id: 3, ...sony }]);
+  });
 
 });
