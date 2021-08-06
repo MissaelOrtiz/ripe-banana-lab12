@@ -51,4 +51,14 @@ describe('demo routes', () => {
 
     expect(res.body).toEqual({ id: 1, name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
   });
+
+  it('deletes a studio via DELETE', async () => {
+    const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    const studio = await Studio.create(bs);
+
+    const res = await request(app)
+      .delete(`/api/v1/studios/${studio.id}`);
+
+    expect(res.body).toEqual({ success: true });
+  });
 });
