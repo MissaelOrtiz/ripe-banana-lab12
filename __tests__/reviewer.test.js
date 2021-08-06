@@ -40,4 +40,15 @@ describe('reviewers routes', () => {
 
     expect(res.body).toEqual([{ id: 1, ...dj }, { id: 2, ...dj2 }, { id: 3, ...dj3 }]);
   });
+
+  it('updates a reviewer via PATCH', async () => {
+    const dj = { name: 'Dick Johnson', company: 'Banana Reviews' };
+    const reviewer = await Reviewer.create(dj);
+
+    const res = await request(app)
+      .patch(`/api/v1/reviewers/${reviewer.id}`)
+      .send({ name: 'Richard Johnson' });
+
+    expect(res.body).toEqual({ id: 1, name: 'Richard Johnson', company: 'Banana Reviews' });
+  });
 });
