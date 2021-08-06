@@ -27,4 +27,18 @@ describe('actor routes', () => {
 
     expect(res.body).toEqual({ id: 1, ...kermit });
   });
+
+  it('gets all actors via GET', async () => {
+    const kermit = { name: 'Kermit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' };
+    const chef = { name: 'The Swedish Chef', dob: '01/01/1991', pob: 'Sweden' };
+    const piggy = { name: 'Ms. Piggy', dob: '02/02/1992', pob: 'Iowa' };
+
+
+    await Actor.bulkCreate([kermit, chef, piggy]);
+
+    const res = await request(app)
+      .get('/api/v1/actors');
+
+    expect(res.body).toEqual([{ id: 1, ...kermit }, { id: 2, ...chef }, { id: 3, ...piggy }]);
+  });
 });
