@@ -17,4 +17,14 @@ describe('actor routes', () => {
 
     expect(res.body).toEqual({ id: 1, ...kermit });
   });
+
+  it('gets an actor via GET:id', async () => {
+    const kermit = { name: 'Kermit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' };
+    const actor = await Actor.create(kermit);
+
+    const res = await request(app)
+      .get(`/api/v1/actors/${actor.id}`);
+
+    expect(res.body).toEqual({ id: 1, ...kermit });
+  });
 });
