@@ -41,7 +41,7 @@ describe('demo routes', () => {
     expect(res.body).toEqual([{ id: 1, ...bs }, { id: 2, ...dream }, { id: 3, ...sony }]);
   });
 
-  it('udpates studio via PATCH', async () => {
+  it('updates studio via PATCH', async () => {
     const bs = { name: 'Barbara Studios', city: 'Portland', state: 'Oregon', country: 'US' };
     const studio = await Studio.create(bs);
 
