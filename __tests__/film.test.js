@@ -48,4 +48,16 @@ describe('film routes', () => {
     expect(res.body).toEqual([{ id: 1, ...be1 }, { id: 2, ...be2 }, { id: 3, ...be3 }]);
   });
 
+  it('updates a film via PATCH', async () => {
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const be = { title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' };
+    const film = await Film.create(be);
+
+    const res = await request(app)
+      .patch(`/api/v1/films/${film.id}`)
+      .send({ name: 'Banana Express 10' });
+
+    expect(res.body).toEqual({ id: 1, title: 'Banana Express 10', studio: `${studio.id}`, released: '2021' });
+  });
+
 });
