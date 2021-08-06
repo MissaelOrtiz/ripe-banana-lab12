@@ -60,4 +60,15 @@ describe('film routes', () => {
     expect(res.body).toEqual({ id: 1, title: 'Banana Express 10', studio: `${studio.id}`, released: '2021' });
   });
 
+  it('deletes a film via DELETE', async () => {
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const be = { title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' };
+    const film = await Film.create(be);
+
+    const res = await request(app)
+      .delete(`/api/v1/films/${film.id}`);
+
+    expect(res.body).toEqual({ success: true });
+  });
+
 });
