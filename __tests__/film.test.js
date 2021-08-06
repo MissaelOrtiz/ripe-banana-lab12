@@ -33,4 +33,19 @@ describe('film routes', () => {
     expect(res.body).toEqual({ id: 1, ...be });
   });
 
+  it('gets all actors via GET', async () => {
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const be1 = { title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' };
+    const be2 = { title: 'Banana Express 2', studio: `${studio.id}`, released: '2021' };
+    const be3 = { title: 'Banana Express 3', studio: `${studio.id}`, released: '2021' };
+
+
+    await Film.bulkCreate([be1, be2, be3]);
+
+    const res = await request(app)
+      .get('/api/v1/films');
+
+    expect(res.body).toEqual([{ id: 1, ...be1 }, { id: 2, ...be2 }, { id: 3, ...be3 }]);
+  });
+
 });
