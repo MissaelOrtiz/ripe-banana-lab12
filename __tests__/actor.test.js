@@ -3,7 +3,6 @@ import request from 'supertest';
 import app from '../lib/app.js';
 import Actor from '../lib/models/Actor.js';
 
-
 describe('actor routes', () => {
   beforeEach(() => {
     return database.sync({ force: true });
