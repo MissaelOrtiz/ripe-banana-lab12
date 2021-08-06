@@ -13,11 +13,22 @@ describe('film routes', () => {
   it('creates a film via POST', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
 
-    const be = { title: 'Banana Express', studio: studio.id, released: 2021 };
+    const be = { title: 'Banana Express', studio: `${studio.id}`, released: '2021' };
 
     const res = await request(app)
       .post('/api/v1/films/')
       .send(be);
+
+    expect(res.body).toEqual({ id: 1, ...be });
+  });
+
+  it('gets a film via GET:id', async () => {
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const be = { title: 'Banana Express', studio: `${studio.id}`, released: '2021' };
+    const film = await Film.create(be);
+
+    const res = await request(app)
+      .get(`/api/v1/films/${film.id}`);
 
     expect(res.body).toEqual({ id: 1, ...be });
   });
