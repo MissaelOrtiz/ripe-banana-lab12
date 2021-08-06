@@ -10,7 +10,7 @@ describe('actor routes', () => {
   });
 
   it('creates an actor via POST', async () => {
-    const kermit = { name: 'Kermit', dob: '05/09/1995', pob: 'Oregon' };
+    const kermit = { name: 'Kermit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' };
     const res = await request(app)
       .post('/api/v1/actors/')
       .send(kermit);
