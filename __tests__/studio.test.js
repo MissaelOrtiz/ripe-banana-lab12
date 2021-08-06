@@ -28,4 +28,17 @@ describe('demo routes', () => {
     expect(res.body).toEqual({ id: 1, ...bs });
   });
 
+  it('gets all studios via GET', async () => {
+    const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    const dream = { name: 'Dreamworks', city: 'Portland', state: 'Oregon', country: 'US' };
+    const sony = { name: 'Sony', city: 'Portland', state: 'Oregon', country: 'US' };
+
+    await Studio.bulkCreate([bs, dream, sony]);
+
+    const res = await request(app)
+      .get('/api/v1/studios');
+
+    expect(res.body).toEqual([{ id: 1, ...bs }, { id: 2, ...dream }, { id: 3, ...sony }]);
+  });
+
 });
