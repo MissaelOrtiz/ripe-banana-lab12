@@ -2,6 +2,7 @@ import database from '../lib/utils/database.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 import Studio from '../lib/models/Studio.js';
+import Film from '../lib/models/Film.js';
 
 
 describe('demo routes', () => {
@@ -20,12 +21,15 @@ describe('demo routes', () => {
 
   it('gets a studio via GET:id', async () => {
     const bs = { name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' };
+    
     const studio = await Studio.create(bs);
+
+    await Film.create({ title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' });
 
     const res = await request(app)
       .get(`/api/v1/studios/${studio.id}`);
 
-    expect(res.body).toEqual({ id: 1, ...bs });
+    expect(res.body).toEqual({ id: 1, ...bs, Films: [{ id: 1, title: 'Banana Express 1' }] });
   });
 
   it('gets all studios via GET', async () => {
