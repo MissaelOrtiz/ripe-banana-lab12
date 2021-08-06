@@ -35,7 +35,7 @@ describe('reviews routes', () => {
     const res = await request(app)
       .get(`/api/v1/reviews/${review.id}`);
 
-    expect(res.body).toEqual({ id: 1, ...review });
+    expect(res.body).toEqual({ id: 1, ...review.toJSON() });
   });
 
 });
