@@ -41,4 +41,25 @@ describe('actor routes', () => {
 
     expect(res.body).toEqual([{ id: 1, ...kermit }, { id: 2, ...chef }, { id: 3, ...piggy }]);
   });
+
+  it('updates an actor via PATCH', async () => {
+    const kermit = { name: 'Kremit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' };
+    const actor = await Actor.create(kermit);
+
+    const res = await request(app)
+      .patch(`/api/v1/actors/${actor.id}`)
+      .send({ name: 'Kermit' });
+
+    expect(res.body).toEqual({ id: 1, name: 'Kermit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' });
+  });
+
+  it('deletes an actor via DELETE', async () => {
+    const kermit = { name: 'Kremit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' };
+    const actor = await Actor.create(kermit);
+
+    const res = await request(app)
+      .delete(`/api/v1/actors/${actor.id}`);
+
+    expect(res.body).toEqual({ success: true });
+  });
 });
