@@ -30,8 +30,8 @@ describe('actor routes', () => {
 
   it('gets all actors via GET', async () => {
     const kermit = { name: 'Kermit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon' };
-    const chef = { name: 'The Swedish Chef', dob: '01/01/1991', pob: 'Sweden' };
-    const piggy = { name: 'Ms. Piggy', dob: '02/02/1992', pob: 'Iowa' };
+    const chef = { name: 'The Swedish Chef', dob: '1991-01-01T08:00:00.000Z', pob: 'Sweden' };
+    const piggy = { name: 'Ms. Piggy', dob: '1992-02-02T08:00:00.000Z', pob: 'Iowa' };
 
 
     await Actor.bulkCreate([kermit, chef, piggy]);
