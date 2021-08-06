@@ -67,4 +67,17 @@ describe('reviews routes', () => {
 
     expect(res.body).toEqual({  id: 1, rating: 5, reviewer: `${reviewer.id}`, review: 'It good', film: `${be.id}` });
   });
+
+  it('deletes a review via DELETE', async () => {
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const reviewer = await Reviewer.create({ name: 'Dick Johnson', company: 'Banana Reviews' });
+    const be = await Film.create({ title: 'Banana Express', studio: `${studio.id}`, released: '2021' });
+
+    const review = await Review.create({ rating: 1, reviewer: `${reviewer.id}`, review: 'It good', film: `${be.id}` });
+
+    const res = await request(app)
+      .delete(`/api/v1/reviews/${review.id}`);
+
+    expect(res.body).toEqual({ success: true });
+  });
 });
