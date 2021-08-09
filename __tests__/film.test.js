@@ -13,7 +13,7 @@ describe('film routes', () => {
   it('creates a film via POST', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
 
-    const be = { title: 'Banana Express', studio: `${studio.id}`, released: '2021' };
+    const be = { title: 'Banana Express', StudioId: studio.id, released: '2021' };
 
     const res = await request(app)
       .post('/api/v1/films/')
@@ -24,20 +24,29 @@ describe('film routes', () => {
 
   it('gets a film via GET:id', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
-    const be = { title: 'Banana Express', studio: `${studio.id}`, released: '2021' };
+    const be = { title: 'Banana Express', StudioId: studio.id, released: '2021' };
     const film = await Film.create(be);
 
     const res = await request(app)
       .get(`/api/v1/films/${film.id}`);
 
-    expect(res.body).toEqual({ id: 1, ...be });
+    expect(res.body).toEqual({ id: 1, 
+      title: 'Banana Express',
+      released: '2021',
+      Studio: {
+        id: 1,
+        name: 'Banana Studios',
+      }
+    });
   });
 
   it('gets all actors via GET', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
-    const be1 = { title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' };
-    const be2 = { title: 'Banana Express 2', studio: `${studio.id}`, released: '2021' };
-    const be3 = { title: 'Banana Express 3', studio: `${studio.id}`, released: '2021' };
+
+    
+    const be1 = { title: 'Banana Express 1', StudioId: studio.id, released: '2021' };
+    const be2 = { title: 'Banana Express 2', StudioId: studio.id, released: '2021' };
+    const be3 = { title: 'Banana Express 3', StudioId: studio.id, released: '2021' };
 
 
     await Film.bulkCreate([be1, be2, be3]);
@@ -45,7 +54,7 @@ describe('film routes', () => {
     const res = await request(app)
       .get('/api/v1/films');
 
-    expect(res.body).toEqual([{ id: 1, ...be1 }, { id: 2, ...be2 }, { id: 3, ...be3 }]);
+    expect(res.body).toEqual([{ id: 1, title: 'Banana Express 1', released: '2021', Studio: { id: 1, name: 'Banana Studios' } }, { id: 2, title: 'Banana Express 2', released: '2021', Studio: { id: 1, name: 'Banana Studios' } }, { id: 3, title: 'Banana Express 3', released: '2021', Studio: { id: 1, name: 'Banana Studios' } }]);
   });
 
   it('updates a film via PATCH', async () => {
