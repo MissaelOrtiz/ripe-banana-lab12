@@ -40,7 +40,7 @@ describe('film routes', () => {
     });
   });
 
-  it('gets all actors via GET', async () => {
+  it('gets all film via GET', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
 
     
@@ -59,14 +59,14 @@ describe('film routes', () => {
 
   it('updates a film via PATCH', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
-    const be = { title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' };
+    const be = { title: 'Banana Express 1', StudioId: studio.id, released: '2021' };
     const film = await Film.create(be);
 
     const res = await request(app)
       .patch(`/api/v1/films/${film.id}`)
       .send({ title: 'Banana Express 10' });
 
-    expect(res.body).toEqual({ id: 1, title: 'Banana Express 10', studio: `${studio.id}`, released: '2021' });
+    expect(res.body).toEqual({ id: 1, title: 'Banana Express 10', StudioId: studio.id, released: '2021' });
   });
 
   it('deletes a film via DELETE', async () => {
