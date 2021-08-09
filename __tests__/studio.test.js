@@ -24,7 +24,7 @@ describe('demo routes', () => {
     
     const studio = await Studio.create(bs);
 
-    await Film.create({ title: 'Banana Express 1', studio: `${studio.id}`, released: '2021' });
+    await Film.create({ title: 'Banana Express 1', StudioId: studio.id, released: '2021' });
 
     const res = await request(app)
       .get(`/api/v1/studios/${studio.id}`);
