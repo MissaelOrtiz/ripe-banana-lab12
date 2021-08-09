@@ -14,9 +14,9 @@ describe('reviews routes', () => {
   it('creates a review via POST', async () => {
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
     const reviewer = await Reviewer.create({ name: 'Dick Johnson', company: 'Banana Reviews' });
-    const be = await Film.create({ title: 'Banana Express', studio: `${studio.id}`, released: '2021' });
+    const be = await Film.create({ title: 'Banana Express', StudioId: `${studio.id}`, released: '2021' });
 
-    const review = { rating: 5, reviewer: `${reviewer.id}`, review: 'It good', film: `${be.id}` };
+    const review = { rating: 5, ReviewerId: `${reviewer.id}`, review: 'It good', FilmId: `${be.id}` };
 
     const res = await request(app)
       .post('/api/v1/reviews/')
