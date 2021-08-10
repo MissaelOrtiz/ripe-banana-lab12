@@ -19,7 +19,7 @@ describe('actor routes', () => {
     expect(res.body).toEqual({ id: 1, ...kermit });
   });
 
-  it.only('gets an actor via GET:id', async () => {
+  it('gets an actor via GET:id', async () => {
     const kermit = { name: 'Kermit', dob: '1995-05-09T07:00:00.000Z', pob: 'Oregon', FilmId: 1 };
     const actor = await Actor.create(kermit);
 
