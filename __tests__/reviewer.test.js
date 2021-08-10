@@ -28,11 +28,11 @@ describe('reviewers routes', () => {
 
     const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
     const be = await Film.create({ title: 'Banana Express', StudioId: studio.id, released: '2021' });
-    const review = await Review.create({ rating: 5, ReviewerId: reviewer.id, review: 'It good', FilmId: be.id });
+    await Review.create({ rating: 5, ReviewerId: reviewer.id, review: 'It good', FilmId: be.id });
     const res = await request(app)
       .get(`/api/v1/reviewers/${reviewer.id}`);
 
-    expect(res.body).toEqual({ id: 1, name: 'Dick Johnson', company: 'Banana Reviews', Reviews:[{ id: 1, rating: 5, review: 'It good', Film: {id: 1, title: 'Banana Express' }}] });
+    expect(res.body).toEqual({ id: 1, name: 'Dick Johnson', company: 'Banana Reviews', Reviews:[{ id: 1, rating: 5, review: 'It good', Film: { id: 1, title: 'Banana Express' } }] });
   });
 
   it('gets all reviewers via GET', async () => {
