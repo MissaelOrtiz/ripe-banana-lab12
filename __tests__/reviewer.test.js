@@ -70,8 +70,10 @@ describe('reviewers routes', () => {
   });
 
   it('deletes a reviewer via DELETE, and fails', async () => {
-    const dj = { name: 'Dick Johnson', company: 'Banana Reviews' };
-    const reviewer = await Reviewer.create(dj);
+    const studio = await Studio.create({ name: 'Banana Studios', city: 'Portland', state: 'Oregon', country: 'US' });
+    const reviewer = await Reviewer.create({ name: 'Dick Johnson', company: 'Banana Reviews' });
+    const be = await Film.create({ title: 'Banana Express', StudioId: studio.id, released: '2021' });
+    await Review.create({ rating: 5, ReviewerId: reviewer.id, review: 'It good', FilmId: be.id });
 
     const res = await request(app)
       .delete(`/api/v1/reviewers/${reviewer.id}`);
