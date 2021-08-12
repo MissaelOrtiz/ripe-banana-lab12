@@ -51,7 +51,7 @@ describe('reviews routes', () => {
     const res = await request(app)
       .get('/api/v1/reviews');
 
-    expect(res.body).toEqual([{ id: 1, rating: 5, review: 'It good', Film: {id: 1, title: 'Banana Express'} }, { id: 2, rating: 1, review: 'Nevermind I actually watched the movie', Film: {id: 1, title: 'Banana Express'} }]);
+    expect(res.body).toEqual([{ id: 1, rating: 5, review: 'It good', Film: { id: 1, title: 'Banana Express' } }, { id: 2, rating: 1, review: 'Nevermind I actually watched the movie', Film: { id: 1, title: 'Banana Express' } }]);
   });
 
   it('updates a review via PATCH', async () => {
