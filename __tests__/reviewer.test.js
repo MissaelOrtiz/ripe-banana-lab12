@@ -59,7 +59,7 @@ describe('reviewers routes', () => {
     expect(res.body).toEqual({ id: 1, name: 'Richard Johnson', company: 'Banana Reviews' });
   });
 
-  it('deletes a reviewer via DELETE', async () => {
+  it('deletes a reviewer via DELETE, and succeeds', async () => {
     const dj = { name: 'Dick Johnson', company: 'Banana Reviews' };
     const reviewer = await Reviewer.create(dj);
 
@@ -67,5 +67,15 @@ describe('reviewers routes', () => {
       .delete(`/api/v1/reviewers/${reviewer.id}`);
 
     expect(res.body).toEqual({ success: true });
+  });
+
+  it('deletes a reviewer via DELETE, and fails', async () => {
+    const dj = { name: 'Dick Johnson', company: 'Banana Reviews' };
+    const reviewer = await Reviewer.create(dj);
+
+    const res = await request(app)
+      .delete(`/api/v1/reviewers/${reviewer.id}`);
+
+    expect(res.body).toEqual({ success: false });
   });
 });
